@@ -55,8 +55,10 @@ Knowledge Recommendation System Based on Counselor Feedback by Machine Learning
 
 * 입력데이터
 
-BOW(Back of Word)을 통해 keyword의 등장 유/무를 정리한 csv 파일\
-(입력데이터) './input_data/index_model.csv'
+(설명) BOW(Back of Word)을 통해 keyword의 등장 유/무를 정리한 csv 파일\
+(용도) x_data | y_data | train | valid | test 등 데이터 분할\
+(타입) csv\
+(예시) './input_data/index_model.csv'
 
 * 입력 데이터 구조
 
@@ -72,13 +74,15 @@ keyword_1 | keyword_2 | keyword_3 | ... | keyword_1444 | Label |
 
 * 입력 파라미터
 
-(목적) 입력데이터 path\
-(타입) string\
+(명) path\
+(타입) str\
+(목적) 입력데이터 고정 path\
+(설명) 입력데이터 고정 path\
 (예시) path = './input_data/index_model.csv'
 
 * 프로세스
 
-(데이터 나누는 사진 첨부)
+![data](/image/data.png)
 
 Train_Data | Test_data
 ---|---
@@ -90,29 +94,36 @@ Train(train)_Data | Train(valid)_Data | Test_Data
 
 위의 표와 같이 데이터를 자르는 프로세스를 진행합니다.
 
-전체 데이터 중 80프로를 학습에 활용하고,
+전체 데이터 중 80프로를 학습(train)에 활용하고,
 
-전체 데이터 중 20프로를 테스트에 활용합니다.
+전체 데이터 중 20프로를 테스트(test)에 활용합니다.
 
 * 출력데이터
 
-X_data,y_data,y_data2
+X_data | y_data | y_data2
+---|---|---
+keyword1,2,...,1444 | lable(unknown) | lable(original)
 
-x_train,y_train
+> lable(original) : 원래 lable 값(1~25)\
+lable(unknown) : unknown 처리를 위해 원래 lable 값 5이상 값 5로 변환
 
-x_valid,y_valid
+x_train | x_valid | x_test
+---|---|---
+keyword1,2,...,1444(60%) | keyword1,2,...,1444(20%) | keyword1,2,...,1444(20%)
 
-x_test,y_test
+y_train | y_valid | y_test
+--- | --- | ---
+lable(original, 60%) | lable(original, 20%) | lable(original, 20%)
 
-x_colum
-
-nb_classes
+x_colum | nb_classes
+--- | ---
+keyword colum | 중복 제거 lable 수
 
 ## Model Training
 
 * 입력데이터
 
-(데이터 전처리 출력데이터)
+('데이터 전처리' 출력데이터)
 
 X_data,y_data,y_data2,x_train,y_train,x_valid,y_valid,x_test,y_test,x_colum,nb_classes
 
