@@ -55,8 +55,8 @@ Knowledge Recommendation System Based on Counselor Feedback by Machine Learning
 
 * 입력데이터
 
-bow 작업을 한 csv 파일
-'./input_data/index_model.csv'
+BOW(Back of Word)을 통해 keyword의 등장 유/무를 정리한 csv 파일\
+(입력데이터) './input_data/index_model.csv'
 
 * 입력 데이터 구조
 
@@ -72,10 +72,8 @@ keyword_1 | keyword_2 | keyword_3 | ... | keyword_1444 | Label |
 
 * 입력 파라미터
 
-(목적) 입력데이터 path
-
-(타입) string
-
+(목적) 입력데이터 path\
+(타입) string\
 (예시) path = './input_data/index_model.csv'
 
 * 프로세스
@@ -120,10 +118,18 @@ X_data,y_data,y_data2,x_train,y_train,x_valid,y_valid,x_test,y_test,x_colum,nb_c
 
 * 입력파라미터
 
+(목적) 입력데이터 path\
+(타입) string\
+(예시) path = './input_data/index_model.csv'
+
 learning_rate = 0.0000005
+
 global_step = 500001
+
 valid_step = 10001
+
 view_step = 5000
+
 saver_step = 10000
 
 * 프로세스
