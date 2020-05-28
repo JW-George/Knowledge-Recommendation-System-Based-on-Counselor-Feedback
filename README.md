@@ -29,7 +29,6 @@ Knowledge Recommendation System Based on Counselor Feedback by Machine Learning
     │  │  │  -10000.data-00000-of-00001
     │  │  │  -10000.index
     │  │  │  -10000.meta
-    │  │  │  .DS_Store
     │  │  │  checkpoint
     │  ├─model_2
     │  │  │  -10000.data-00000-of-00001
@@ -40,13 +39,11 @@ Knowledge Recommendation System Based on Counselor Feedback by Machine Learning
     │  │  │  -10000.data-00000-of-00001
     │  │  │  -10000.index
     │  │  │  -10000.meta
-    │  │  │  .DS_Store
     │  │  │  checkpoint
     │  └─model_4
     │      │  -10000.data-00000-of-00001
     │      │  -10000.index
     │      │  -10000.meta
-    │      │  .DS_Store
     │      │  checkpoint
     └─predict_result
             result.csv
@@ -55,7 +52,7 @@ Knowledge Recommendation System Based on Counselor Feedback by Machine Learning
 
 * 입력데이터
 
-(설명) BOW(Back of Word)을 통해 keyword의 등장 유/무를 정리한 csv 파일\
+(설명) BOW(Back of Word)을 통해 keyword의 등장 유/무를 통해 STT를 정형화한 csv 파일\
 (용도) x_data | y_data | train | valid | test 등 데이터 분할\
 (타입) csv\
 (예시) './input_data/index_model.csv'
@@ -74,10 +71,9 @@ keyword_1 | keyword_2 | keyword_3 | ... | keyword_1444 | Label |
 
 * 입력 파라미터
 
-(명) path\
+(명명) path\
 (타입) str\
-(목적) 입력데이터 고정 path\
-(설명) 입력데이터 고정 path\
+(목적) 입력데이터 고정 path 지정\
 (예시) path = './input_data/index_model.csv'
 
 * 프로세스
@@ -123,37 +119,66 @@ keyword colum | 중복 제거 lable 수
 
 * 입력데이터
 
-('데이터 전처리' 출력데이터)
-
-X_data,y_data,y_data2,x_train,y_train,x_valid,y_valid,x_test,y_test,x_colum,nb_classes
+(명명) X_data,y_data,y_data2,x_train,y_train,x_valid,y_valid,x_test,y_test,x_colum,nb_classes\
+(타입) Pandas.DataFrame\
+(목적) '데이터 전처리' 출력데이터를 입력함\
+(예시) X_data,y_data,y_data2,x_train,y_train,x_valid,y_valid,x_test,y_test,x_colum,nb_classes
 
 * 입력파라미터
 
-(목적) 입력데이터 path\
-(타입) string\
-(예시) path = './input_data/index_model.csv'
-
-learning_rate = 0.0000005
-
-global_step = 500001
-
-valid_step = 10001
-
-view_step = 5000
-
-saver_step = 10000
+(명명) learning_rate,global_step,valid_step,view_step,saver_step\
+(타입) int | float\
+(목적)\
+learning_rate : (학습률/학습보폭) local minimun 도달을 위한 기울기에 곱해지는 스칼라 값\
+global_step : x_train|y_train 학습 epoch\
+valid_step : x_valid|y_valid 학습 epoch\
+view_step : 입력값 만큼의 학습진행 상황을 시각화\
+saver_step : 입력값 만큼의 학습진행 상황을 모델화(checkpoint지정)\
+(예시)\
+learning_rate = 0.0000005\
+global_step = 500001\
+valid_step = 10001\
+view_step = 5000\
+saver_step = 10000\
 
 * 프로세스
 
 (data_embedding)
 
+```python
+X, y, target,Y_one_hot = data_embedding(nb_classes,x_colum)
+```
+tf.placeholder, reshape을 통한 data embedding 작업
+
 (layer_structed)
+
+Activation function : sigmoid function
+```python
+W5, b5, layer_5, y_pred, keep_prob = layer_structed(X, y, target, nb_classes, x_colum)
+```
+(사진추가)
+x_colum 갯수 만큼의 input node\
+nb_classes 갯수 만큼의 output node\
 
 (loss_function)
 
+Loss function : tf.reduce_mean
+```python
+loss = loss_function(target,y_pred)
+```
+
+
 (optimizer)
 
+```python
+d_b, d_W = optimizer(y_pred, target, layer_5, X)
+```
+
 (train)
+
+```python
+X, y, target,Y_one_hot = data_embedding(nb_classes,x_colum)
+```
 
 Updating network using gradients
 
