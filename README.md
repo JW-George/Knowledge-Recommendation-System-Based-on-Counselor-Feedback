@@ -3,8 +3,8 @@ Knowledge Recommendation System Based on Counselor Feedback by Machine Learning
 
 <p align="center">
   <img src="./image/spelix.png"><br>
-  <a href="spelix.com">SPELIX Inc. R&D Center</a> |
-  <a href="github.com/HyunJW">AI Team</a>
+  <a src="spelix.com">SPELIX Inc. R&D Center</a> |
+  <a src="github.com/HyunJW">AI Team</a>
 </p>
 
 ---
