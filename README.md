@@ -6,7 +6,7 @@ Knowledge Recommendation System Based on Counselor Feedback by Machine Learning
   <a href="#">R&D Center</a> |
   <a href="#">AI Team</a>
   <br><br>
-  <img src="./image/data.png">
+  <img src="./image/spelix.png">
 </p>
 
 ---
@@ -59,6 +59,12 @@ Knowledge Recommendation System Based on Counselor Feedback by Machine Learning
 ## Data Pre_Processing
 
 * 입력데이터
+
+```bash
+    ├─input_data
+    │      .DS_Store
+    │      index_model.csv
+```
 
 (설명) BOW(Back of Word)을 통해 keyword의 등장 유/무를 통해 STT를 정형화한 csv 파일\
 (용도) x_data | y_data | train | valid | test 등 데이터 분할\
@@ -127,9 +133,13 @@ keyword colum | 중복 제거 lable 수
 
 * 입력데이터
 
+```python
+input_of_train = data_preprocessing()
+```
+
 (명명) X_data,y_data,y_data2,x_train,y_train,x_valid,y_valid,x_test,y_test,x_colum,nb_classes\
 (타입) Pandas.DataFrame\
-(목적) '데이터 전처리' 출력데이터를 입력함\
+(목적) '데이터 전처리' 리턴 값를 학습에 입력함\
 (예시) X_data,y_data,y_data2,x_train,y_train,x_valid,y_valid,x_test,y_test,x_colum,nb_classes
 
 * 입력파라미터
@@ -151,65 +161,117 @@ saver_step = 10000
 
 * 프로세스
 
-(data_embedding)
+1. data_embedding
 
 ```python
 X, y, target,Y_one_hot = data_embedding(nb_classes,x_colum)
 ```
 tf.placeholder, reshape을 통한 data embedding 작업
 
-(layer_structed)
-
-![data](/image/layer.png)
-
-Activation function : sigmoid function
+2. layer_structed
 
 ```python
 W5, b5, layer_5, y_pred, keep_prob = layer_structed(X, y, target, nb_classes, x_colum)
 ```
+
+![layer](/image/layer.png)
+
+Activation function : sigmoid function\
 x_colum 갯수 만큼의 input node\
 nb_classes 갯수 만큼의 output node
 
-(loss_function)
+3. loss_function
 
-Loss function : tf.reduce_mean
 ```python
 loss = loss_function(target,y_pred)
 ```
+Loss function : tf.reduce_mean
 
-
-(optimizer)
+4. optimizer
 
 ```python
 d_b, d_W = optimizer(y_pred, target, layer_5, X)
 ```
+optimizer : Back propagation
 
-(train)
+5. train & save
 
 ```python
-X, y, target,Y_one_hot = data_embedding(nb_classes,x_colum)
-
-
+train(x_train,y_train,x_test,y_test,x_valid,y_valid,nb_classes,x_colum)
 ```
 
-Updating network using gradients
-
-Prediction and Accuracy
-
-sess.run(train_epoch)
-
-pred
+train : sess.run(tf.global_variables_initializer())
+save : saver.save(sess, path, global_step)
 
 * 출력데이터
 
-saver.save(sess, './model_test/', global_step=step)
+```bash
+    ├─model
+    │  ├─model_0
+    │  │  │  -10000.data-00000-of-00001
+    │  │  │  -10000.index
+    │  │  │  -10000.meta
+    │  │  │  checkpoint
+    │  ├─model_1
+    │  │  │  -10000.data-00000-of-00001
+    │  │  │  -10000.index
+    │  │  │  -10000.meta
+    │  │  │  checkpoint
+    │  ├─model_2
+    │  │  │  -10000.data-00000-of-00001
+    │  │  │  -10000.index
+    │  │  │  -10000.meta
+    │  │  │  checkpoint
+    │  ├─model_3
+    │  │  │  -10000.data-00000-of-00001
+    │  │  │  -10000.index
+    │  │  │  -10000.meta
+    │  │  │  checkpoint
+    │  └─model_4
+    │      │  -10000.data-00000-of-00001
+    │      │  -10000.index
+    │      │  -10000.meta
+    │      │  checkpoint
+```
 
 ## Load Pre_Trained Model
 
 * 입력데이터
 
-사전학습 모델
+```python
+input_of_train = data_preprocessing()
+```
+데이터 전처리 csv
 
+```bash
+    ├─model
+    │  ├─model_0
+    │  │  │  -10000.data-00000-of-00001
+    │  │  │  -10000.index
+    │  │  │  -10000.meta
+    │  │  │  checkpoint
+    │  ├─model_1
+    │  │  │  -10000.data-00000-of-00001
+    │  │  │  -10000.index
+    │  │  │  -10000.meta
+    │  │  │  checkpoint
+    │  ├─model_2
+    │  │  │  -10000.data-00000-of-00001
+    │  │  │  -10000.index
+    │  │  │  -10000.meta
+    │  │  │  checkpoint
+    │  ├─model_3
+    │  │  │  -10000.data-00000-of-00001
+    │  │  │  -10000.index
+    │  │  │  -10000.meta
+    │  │  │  checkpoint
+    │  └─model_4
+    │      │  -10000.data-00000-of-00001
+    │      │  -10000.index
+    │      │  -10000.meta
+    │      │  checkpoint
+```
+사전학습한 모델
 
 * 입력파라미터
 
