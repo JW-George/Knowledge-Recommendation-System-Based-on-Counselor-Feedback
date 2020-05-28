@@ -1,13 +1,14 @@
 # Knowledge-Recommendation-Processing-System
 Knowledge Recommendation System Based on Counselor Feedback by Machine Learning
 
+---
 <p align="center">
+  <br>
   <img src="./image/spelix.png"><br>
-  <a src="spelix.com">SPELIX Inc. R&D Center</a> |
-  <a src="github.com/HyunJW">AI Team</a>
+  <a href="#">SPELIX Inc. R&D Center</a> |
+  <a href="#">AI Team</a>
 </p>
 
----
 
 ## Abstract
 > The ordering company is putting a lot of effort into establishing an appropriate knowledge recommendation system for an accurate and prompt knowledge recommendation system of counseling services. The ordering company considers whether it has rule-based knowledge recommendation technology as well as machine learning-based knowledge recommendation technology in selecting an operator. This system is a knowledge recommendation system that recommends the appropriate knowledge type to the counselor based on the feedback from the counselor.
@@ -16,7 +17,6 @@ Knowledge Recommendation System Based on Counselor Feedback by Machine Learning
 
 ## System Structure
 ```bash
-
 │  .gitignore
 │  LICENSE
 │  README.md
@@ -142,6 +142,14 @@ input_of_train = data_preprocessing()
 
 * 입력파라미터
 
+```python
+learning_rate = 0.0000005
+global_step = 500001
+valid_step = 10001
+view_step = 5000
+saver_step = 10000
+```
+
 (명명) learning_rate,global_step,valid_step,view_step,saver_step\
 (타입) int | float\
 (목적)\
@@ -232,15 +240,25 @@ save : saver.save(sess, path, global_step)
     │      │  checkpoint
 ```
 
+(명명) -10000.data-00000-of-00001,-10000.index,-10000.meta,checkpoint\
+(타입) tensorflow.model\
+(목적) '데이터 전처리' 리턴 값를 학습에 입력함
+
 ## Load Pre_Trained Model
 
 * 입력데이터
 
+데이터전처리 csv
 ```python
 input_of_train = data_preprocessing()
 ```
-데이터 전처리 csv
 
+(명명) X_data,y_data,y_data2,x_train,y_train,x_valid,y_valid,x_test,y_test,x_colum,nb_classes\
+(타입) Pandas.DataFrame\
+(목적) '데이터 전처리' 리턴 값를 학습에 입력함\
+(예시) X_data,y_data,y_data2,x_train,y_train,x_valid,y_valid,x_test,y_test,x_colum,nb_classes
+
+사전학습 모델
 ```bash
     ├─model
     │  ├─model_0
@@ -269,29 +287,81 @@ input_of_train = data_preprocessing()
     │      │  -10000.meta
     │      │  checkpoint
 ```
-사전학습한 모델
+
+(명명) -10000.data-00000-of-00001,-10000.index,-10000.meta,checkpoint\
+(타입) tensorflow.model\
+(목적) '데이터 전처리' 리턴 값를 학습에 입력함
 
 * 입력파라미터
 
-path='./predict_result/result.csv'
+```python
+new_df=load(nb_classes,x_colum,X_data,y_data,y_data2,
+     path='./predict_result/result.csv')
+```
+
+(명명) path\
+(타입) str\
+(목적) 출력결과 export 고정 path 지정\
+(예시) path='./predict_result/result.csv'
 
 * 프로세스
 
-data_embedding
+1. data_embedding
 
-layer_structed
+```python
+X, y, target,Y_one_hot = data_embedding(nb_classes,x_colum)
+```
 
-restore('./model/model_0
+2. layer_structed
 
-hyun2
+```python
+W5, b5, layer_5, y_pred, keep_prob = layer_structed(X, y, target, nb_classes, x_colum)
+```
 
-save_csv2
+3. restore
 
-print_predict
+```python
+    model_0 = pred_by_restore('./model/model_0',W5, b5, layer_5, y_pred, keep_prob, Y_one_hot,X_data,X,y)
+    model_1 = pred_by_restore('./model/model_1',W5, b5, layer_5, y_pred, keep_prob, Y_one_hot,X_data,X,y)
+    model_2 = pred_by_restore('./model/model_2',W5, b5, layer_5, y_pred, keep_prob, Y_one_hot,X_data,X,y)
+    model_3 = pred_by_restore('./model/model_3',W5, b5, layer_5, y_pred, keep_prob, Y_one_hot,X_data,X,y)
+    model_4 = pred_by_restore('./model/model_4',W5, b5, layer_5, y_pred, keep_prob, Y_one_hot,X_data,X,y)
+```
+
+4. predict ranking export
+
+```python
+model_list = hyun2(model_0,model_1,model_2,model_3,model_4)
+```
+
+5. save_csv2
+
+```python
+new_df = save_csv2(path,y_data2,model_list)
+```
+
+6. print_predict
+
+```python
+print_predict(new_df)
+```
 
 * 출력데이터
 
-csv
+```bash
+    └─predict_result
+            result.csv
+```
+
+rank0 | rank1 | rank2 | rank3 | rank4 | rank5 | real_Y | bool_result
+---|---|---|---|---|---|---|---
+0 | 3 | 23 | 1 | 4 | 2 | 0 | True
+... | ... | ... | ... | ... | ... | ... | ...
+7 | 8 | 5 | 9 | 3 | 0 | 0 | False
+
+(명명) result.csv\
+(타입) csv\
+(설명) 시스템 예측 & 원래 정답 Label 비교 결과 정리한 csv\
 
 ## Version History
 
