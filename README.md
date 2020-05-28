@@ -1,12 +1,20 @@
 # Knowledge-Recommendation-Processing-System
 Knowledge Recommendation System Based on Counselor Feedback by Machine Learning
 
+<p align="center">
+  <b>SPELIX Inc.</b><br>
+  <a href="#">R&D Center</a> |
+  <a href="#">AI Team</a>
+  <br><br>
+  <img src="./image/data.png">
+</p>
+
 ---
 
 ## Abstract
 > The ordering company is putting a lot of effort into establishing an appropriate knowledge recommendation system for an accurate and prompt knowledge recommendation system of counseling services. The ordering company considers whether it has rule-based knowledge recommendation technology as well as machine learning-based knowledge recommendation technology in selecting an operator. This system is a knowledge recommendation system that recommends the appropriate knowledge type to the counselor based on the feedback from the counselor.
 
-> 발주사는 상담서비스의 정확하고 신속할 수 있는 지식 추천 시스템을 위한 적절한 지식추천 시스템을 구축하는데 많은 노력을 기울이고 있다. 발주사는 시행사를 선정하는데 있어 룰기반(Rule Based) 지식추천 기술은 물론, 기계학습(Machine Learning)기반 지식추천 기술을 갖고 있는지를 고려한다. 본 시스템은 이와 같은 상담사 피드백에 근거하여 적절한 지식유형을 상담사에게 추천하는 지식추천 시스템입니다.
+> 발주사는 상담서비스의 정확하고 신속할 수 있는 지식 추천 시스템을 위한 적절한 지식추천 시스템을 구축하는데 많은 노력을 기울이고 있다. 발주사는 시행사를 선정하는데 있어 룰기반(Rule Based) 지식추천 기술은 물론, 기계학습(Machine Learning)기반 지식추천 기술을 갖고 있는지를 고려한다. 본 시스템은 이와 같이 상담사 피드백에 근거하여 적절한 지식유형을 상담사에게 추천하는 기계학습(Machine Learning)기반 지식추천 시스템입니다.
 
 ## System Structure
 ```bash
@@ -139,7 +147,7 @@ learning_rate = 0.0000005\
 global_step = 500001\
 valid_step = 10001\
 view_step = 5000\
-saver_step = 10000\
+saver_step = 10000
 
 * 프로세스
 
@@ -152,13 +160,15 @@ tf.placeholder, reshape을 통한 data embedding 작업
 
 (layer_structed)
 
+![data](/image/layer.png)
+
 Activation function : sigmoid function
+
 ```python
 W5, b5, layer_5, y_pred, keep_prob = layer_structed(X, y, target, nb_classes, x_colum)
 ```
-(사진추가)
 x_colum 갯수 만큼의 input node\
-nb_classes 갯수 만큼의 output node\
+nb_classes 갯수 만큼의 output node
 
 (loss_function)
 
@@ -178,6 +188,8 @@ d_b, d_W = optimizer(y_pred, target, layer_5, X)
 
 ```python
 X, y, target,Y_one_hot = data_embedding(nb_classes,x_colum)
+
+
 ```
 
 Updating network using gradients
