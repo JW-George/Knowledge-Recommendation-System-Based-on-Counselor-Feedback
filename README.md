@@ -365,7 +365,9 @@ rank0 | rank1 | rank2 | rank3 | rank4 | rank5 | real_Y | bool_result
 
 ## Version History
 
-* v.1.0 : 상담유형 추천 시스템
+* v.1.0 : Global Train Epoch 500,000
+* v.1.1(to do) : ADD API with empty list
+* v.1.2(to do) : ADD Binary Decision 
 
 ## Contacts
 
