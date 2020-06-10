@@ -368,6 +368,7 @@ rank0 | rank1 | rank2 | rank3 | rank4 | rank5 | real_Y | bool_result
 * v.1.0 : Global Train Epoch 500,000
 * v.1.1 : ADD API with empty list
 * v.1.2(to do) : Extract Keyword BOW
+* v.1.3(to do) : 이진 분류 as konlpy
 
 ## Contacts
 
